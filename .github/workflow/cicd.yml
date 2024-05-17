@@ -36,7 +36,7 @@ jobs:
       - name: Build and Push of Docker Image to Amazon ECR
         env:
           ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
-          ECR_REPOSITORY: notes-app-cicd
+          IMAGE_TAG: latest
         run:
-          docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:v1.0 -f Dockerfile .
-          docker push $ECR_REGISTRY/$ECR_REPOSITORY:v1.0
+          docker build -t $ECR_REGISTRY/${{ vars.ECR_REPOSITORY }}:$IMAGE_TAG -f Dockerfile .
+          docker push $ECR_REGISTRY/${{ vars.ECR_REPOSITORY }}:IMAGE_TAG
