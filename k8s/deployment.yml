@@ -1,25 +1,25 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: notes-app-deployment
+  name: notes-app-deployment-ca
   labels:
-    app: notes-app
+    app: notes-app-ca
 spec:
   replicas: 2
   selector:
     matchLabels:
-      app: notes-app
+      app: notes-app-ca
   template:
     metadata:
       labels:
-        app: notes-app
+        app: notes-app-ca
     spec:
       containers:
-      - name: notes-app
-        image: 
+      - name: notes-app-ca
+        image: 471112967512.dkr.ecr.us-east-1.amazonaws.com/notes-app-ca:latest
         resources:
           requests:
             cpu: "300m"
-        imagePullPolicy: IfNotPresent
+        imagePullPolicy: Always
         ports:
         - containerPort: 3000
