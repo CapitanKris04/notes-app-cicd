@@ -3,17 +3,17 @@ name: Publish Docker Image to Amazon ECR and Deploy to Amazon EKS
 on:
   push:
     tags:
-      - 'v*'
+      - 'V*'
 
   workflow_dispatch:
 
 jobs:
   deploy:
-    name: Build Image to Amazon ECR
+    name: Build image and deploy to Amazon ECR
     runs-on: ubuntu-latest
 
     steps:
-      - name: Repository Checkout
+      - name: Repository checkout
         uses: actions/chekout@v4
 
       - name: Install dependencies
@@ -39,7 +39,7 @@ jobs:
           IMAGE_TAG: latest
         run: |
           docker build -t $ECR_REGISTRY/${{ vars.ECR_REPOSITORY }}:$IMAGE_TAG -f Dockerfile .
-          docker push $ECR_REGISTRY/${{ vars.ECR_REPOSITORY }}:IMAGE_TAG
+          docker push $ECR_REGISTRY/${{ vars.ECR_REPOSITORY }}:$IMAGE_TAG
       
       - name: Update kubeconfig 
         run: aws eks updtate-kubeconfig --name ${{ vars.EKS_CLUSTER_NAME }} --region ${{ vars.AWS_REGION }}
